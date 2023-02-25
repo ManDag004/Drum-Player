@@ -19,10 +19,12 @@ public class TestDrums {
 
     @Test
     void testPlay() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        assertEquals(new File("src/Bass.wav"), drums.play('d'));
-        assertEquals(new File("src/Snare.wav"), drums.play('f'));
-        assertEquals(new File("src/Hi-Hat.wav"), drums.play('j'));
-        assertEquals(new File("src/Crash.wav"), drums.play('k'));
-
+        assertEquals(new File("src/Bass.wav"), drums.getSound('d'));
+        assertEquals(new File("src/Snare.wav"), drums.getSound('f'));
+        assertEquals(new File("src/Hi-Hat.wav"), drums.getSound('j'));
+        assertEquals(new File("src/Crash.wav"), drums.getSound('k'));
+        assertEquals(new File("src/Floor-Tom.wav"), drums.getSound('s'));
+        assertEquals(new File("src/Small-Tom.wav"), drums.getSound('g'));
+        assertEquals(new File("src/Medium-Tom.wav"), drums.getSound('h'));
     }
 }

@@ -5,10 +5,11 @@ import model.Player;
 import model.Record;
 import model.Teacher;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Controller {
     private Drums drums;
@@ -23,12 +24,34 @@ public class Controller {
         scanner = new Scanner(System.in);
     }
 
+    public void playSound(Character key) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(drums.getSound(key));
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+
+        clip.start();
+    }
+
+    public void mainPlayRecord() throws InterruptedException,
+            UnsupportedAudioFileException, LineUnavailableException, IOException {
+        Record tempRecord;
+        TimeUnit.SECONDS.sleep(2);
+        for (int i = 0; i < player.getRecords().size(); i++) {
+            tempRecord = player.getRecord(i);
+            playSound(tempRecord.getKey());
+            TimeUnit.MILLISECONDS.sleep(tempRecord.getTime());
+        }
+        player.deleteRecords();
+    }
+
     public void mainRecord() throws UnsupportedAudioFileException,
             LineUnavailableException, IOException, InterruptedException {
-        Character key = scanner.next().charAt(0);
-
         System.out.println("Started recording!");
+
+        Character key = scanner.next().charAt(0);
+        playSound(key);
         player.record(key, 0);
+
         while (true) {
             long startTime = System.currentTimeMillis();
 
@@ -36,6 +59,7 @@ public class Controller {
             if (key == 'q') {
                 break;
             }
+            playSound(key);
             long elapsedTime = System.currentTimeMillis() - startTime;
 
 
@@ -44,7 +68,7 @@ public class Controller {
         System.out.println("Ended recording!");
 
         System.out.println("Replaying!");
-        player.play();
+        mainPlayRecord();
     }
 
     public void mainFreestyle() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
@@ -55,11 +79,11 @@ public class Controller {
             if (choice == 'q') {
                 break;
             }
-            drums.play(choice);
+            playSound(choice);
         }
     }
 
-    public void mainLearn() {
+    public void mainLearn() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         double correctCount = 0;
         System.out.println("Choose the beat you wish to play (1-2): ");
         int beatNum = scanner.nextInt();
@@ -68,8 +92,10 @@ public class Controller {
         String beat = teacher.getBeat(beatNum);
         double total = beat.length() * times;
         System.out.println("You're playing '" + beat + "' " + times + " times!");
+
         for (int i = 0; i < total; i++) {
             Character key = scanner.next().charAt(0);
+            playSound(key);
             if (teacher.checkCorrectness(i, beat, key) == 1) {
                 System.out.println("Correct!");
                 correctCount += 1;
@@ -77,7 +103,7 @@ public class Controller {
                 System.out.println("Wrong!");
             }
         }
-        System.out.println("You correctness is: " + (correctCount / (beat.length() * times)) * 100 + "%!");
+        System.out.println("You correctness is: " + (correctCount / total) * 100 + "%!");
 
     }
 }
