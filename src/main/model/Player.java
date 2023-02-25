@@ -3,16 +3,19 @@ package model;
 import javax.sound.sampled.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Player {
-    ArrayList<Record> records;
-    Drums drumPlayer;
+    private ArrayList<Record> records;
+    private Drums drumPlayer;
 
     public Player() {
         this.records = new ArrayList<Record>();
         this.drumPlayer = new Drums();
+    }
+
+    public ArrayList<Record> getRecords() {
+        return records;
     }
 
     // EFFECTS: Plays every record in records based on when it is supposed to be played

@@ -60,21 +60,24 @@ public class Controller {
     }
 
     public void mainLearn() {
+        double correctCount = 0;
         System.out.println("Choose the beat you wish to play (1-2): ");
         int beatNum = scanner.nextInt();
         System.out.println("Choose the number of times you wish to play this: ");
         int times = scanner.nextInt();
         String beat = teacher.getBeat(beatNum);
-
+        double total = beat.length() * times;
         System.out.println("You're playing '" + beat + "' " + times + " times!");
-        for (int i = 0; i < beat.length() * times; i++) {
+        for (int i = 0; i < total; i++) {
             Character key = scanner.next().charAt(0);
-            if (teacher.checkCorrectness(i, beat, key)) {
+            if (teacher.checkCorrectness(i, beat, key) == 1) {
                 System.out.println("Correct!");
+                correctCount += 1;
             } else {
                 System.out.println("Wrong!");
             }
         }
+        System.out.println("You correctness is: " + (correctCount / (beat.length() * times)) * 100 + "%!");
 
     }
 }

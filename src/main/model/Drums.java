@@ -18,11 +18,12 @@ public class Drums {
 
     // REQUIRES: key should be in the HashMap drumParts
     // EFFECTS: plays the sound corresponding to the key entered by search for it in the HashMap
-    public void play(char key) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    public File play(char key) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         AudioInputStream audioStream = AudioSystem.getAudioInputStream(drumParts.get(key));
         Clip clip = AudioSystem.getClip();
         clip.open(audioStream);
 
         clip.start();
+        return drumParts.get(key);
     }
 }

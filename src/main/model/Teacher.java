@@ -15,8 +15,12 @@ public class Teacher {
         return beats.get(i);
     }
 
-    public boolean checkCorrectness(int currTime, String beat, Character key) {
-        return key == beat.charAt(currTime % beat.length());
+    public int checkCorrectness(int currTime, String beat, Character key) {
+        if (key == beat.charAt(currTime % beat.length())) {
+            return 1;
+        } else {
+            return 0;
+        }
 
     }
 }
