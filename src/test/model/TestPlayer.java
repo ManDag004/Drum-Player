@@ -40,7 +40,9 @@ public class TestPlayer {
         player.record('j', 250);
         player.record('f', 500);
 
-        Record testRecord = player.getRecord(0);
+        player.addToSongs();
+
+        Record testRecord = player.getRecord(0, 1);
         assertEquals('d', testRecord.getKey());
         assertEquals(250, testRecord.getTime());
     }
@@ -51,11 +53,13 @@ public class TestPlayer {
         player.record('j', 250);
         player.record('f', 500);
 
-        Record testRecord = player.getRecord(0);
+        player.addToSongs();
+
+        Record testRecord = player.getRecord(0, 1);
         assertEquals('d', testRecord.getKey());
         assertEquals(250, testRecord.getTime());
 
-        testRecord = player.getRecord(1);
+        testRecord = player.getRecord(1, 1);
         assertEquals('j', testRecord.getKey());
         assertEquals(500, testRecord.getTime());
     }
@@ -66,7 +70,9 @@ public class TestPlayer {
         player.record('j', 250);
         player.record('f', 500);
 
-        Record testRecord = player.getRecord(2);
+        player.addToSongs();
+
+        Record testRecord = player.getRecord(2, 1);
         assertEquals('f', testRecord.getKey());
         assertEquals(0, testRecord.getTime());
     }
@@ -80,6 +86,44 @@ public class TestPlayer {
 
         player.deleteRecords();
         assertEquals(0, player.getRecords().size());
+    }
+
+    @Test
+    void addMultipleToSongs() {
+        player.record('d', 0);
+        player.record('j', 250);
+        player.record('f', 500);
+
+        player.addToSongs();
+        player.deleteRecords();
+
+        player.record('f', 0);
+        player.record('g', 125);
+        player.record('h', 300);
+        player.record('j', 450);
+
+        player.addToSongs();
+        player.deleteRecords();
+
+        assertEquals(3, player.getSong(1).size());
+        assertEquals(4, player.getSong(2).size());
+
+        assertEquals('d', player.getSong(1).get(0).getKey());
+        assertEquals('j', player.getSong(1).get(1).getKey());
+        assertEquals('f', player.getSong(1).get(2).getKey());
+        assertEquals(0, player.getSong(1).get(0).getTime());
+        assertEquals(250, player.getSong(1).get(1).getTime());
+        assertEquals(500, player.getSong(1).get(2).getTime());
+
+        assertEquals('f', player.getSong(2).get(0).getKey());
+        assertEquals('g', player.getSong(2).get(1).getKey());
+        assertEquals('h', player.getSong(2).get(2).getKey());
+        assertEquals('j', player.getSong(2).get(3).getKey());
+        assertEquals(0, player.getSong(2).get(0).getTime());
+        assertEquals(125, player.getSong(2).get(1).getTime());
+        assertEquals(300, player.getSong(2).get(2).getTime());
+        assertEquals(450, player.getSong(2).get(3).getTime());
+
     }
 
 

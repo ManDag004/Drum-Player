@@ -32,12 +32,12 @@ public class Controller {
         clip.start();
     }
 
-    public void mainPlayRecord() throws InterruptedException,
+    public void mainPlayRecord(int songNum) throws InterruptedException,
             UnsupportedAudioFileException, LineUnavailableException, IOException {
         Record tempRecord;
         TimeUnit.SECONDS.sleep(2);
-        for (int i = 0; i < player.getRecords().size(); i++) {
-            tempRecord = player.getRecord(i);
+        for (int i = 0; i < player.getSong(songNum).size(); i++) {
+            tempRecord = player.getRecord(i, songNum);
             playSound(tempRecord.getKey());
             TimeUnit.MILLISECONDS.sleep(tempRecord.getTime());
         }
@@ -65,10 +65,10 @@ public class Controller {
 
             player.record(key, elapsedTime);
         }
+        player.addToSongs();
+        player.deleteRecords();
         System.out.println("Ended recording!");
-
-        System.out.println("Replaying!");
-        mainPlayRecord();
+        System.out.println(player.getSong(1).size());
     }
 
     public void mainFreestyle() throws UnsupportedAudioFileException, LineUnavailableException, IOException {

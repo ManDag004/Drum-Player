@@ -13,6 +13,9 @@ instantly record what I was thinking of so that it could be later played.
 
 *User Stories*:
 - As a user, I want to be able to press the keys on my keyboard and hear the respective sounds
+- As a user, I wish to play in a mode where I can just freestyle
+- As a user, I wish to play in a mode where I can learn a specific beat
+- As a user, I wish to know how much I scored in the learn mode
 - As a user, I want to have buttons on the GUI or keys to start and stop recording the sounds
 - As a user, i want to be able to save my recording somewhere in my desktop
 

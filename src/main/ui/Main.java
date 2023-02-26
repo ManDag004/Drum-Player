@@ -14,7 +14,8 @@ public class Main {
             LineUnavailableException, IOException, InterruptedException {
         Controller controller = new Controller();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter 1 to record, 2 to freestyle, 3 to learn or 'e' to exit: ");
+        System.out.println("Please enter 1 to record, 2 to freestyle, 3"
+                + " to learn, 4 to listen to your records or 'e' to exit: ");
         Character choice = scanner.next().charAt(0);
 
         while (choice != 'e') {
@@ -25,9 +26,13 @@ public class Main {
 
             } else if (choice == '3') {
                 controller.mainLearn();
-
+            } else if (choice == '4') {
+                System.out.println("Choose song num");
+                int songChoice = scanner.nextInt();
+                controller.mainPlayRecord(songChoice);
             }
-            System.out.println("Please enter 1 to record, 2 to freestyle, 3 to learn or 'e' to exit: ");
+            System.out.println("Please enter 1 to record, 2 to freestyle, 3"
+                    + " to learn, 4 to listen to your records or 'e' to exit: ");
             choice = scanner.next().charAt(0);
         }
         System.out.println("Quitting!");
