@@ -12,6 +12,7 @@ public class Drums {
 
     private static HashMap<Character, File> drumParts = new HashMap<>();
 
+
     // EFFECTS: constructs a new Drums object
     public Drums() {
         drumParts.put('d', new File("src/Bass.wav"));
@@ -22,6 +23,7 @@ public class Drums {
         drumParts.put('g', new File("src/Small-Tom.wav"));
         drumParts.put('h', new File("src/Medium-Tom.wav"));
     }
+
 
     // REQUIRES: key should be in the HashMap drumParts
     // EFFECTS: plays the sound corresponding to the key entered by search for it in the HashMap

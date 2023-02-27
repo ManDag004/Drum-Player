@@ -12,10 +12,12 @@ public class Record {
         this.time = time;
     }
 
+
     // Effects: Returns the key in character of the record
     public char getKey() {
         return this.key;
     }
+
 
     // Effects: Returns the time in integer of the record
     public int getTime() {

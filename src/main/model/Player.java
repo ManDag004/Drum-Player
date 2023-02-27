@@ -35,10 +35,12 @@ public class Player {
         records = new ArrayList<>();
     }
 
+
     // EFFECTS: returns the records ArrayList
     public ArrayList<Record> getRecords() {
         return records;
     }
+
 
     // REQUIRES: i and songNum should be in the range
     // EFFECTS: returns the ith record with key and the amount of time to wait after playing it from the given song
@@ -50,12 +52,14 @@ public class Player {
         return new Record(records.get(i).getKey(), records.get(i + 1).getTime());
     }
 
+
     // REQUIRES: elapsedTime >= 0 and key should correspond to a drum part
     // MODIFIES: this
     // EFFECTS: Stores the keys pressed and the time between each key as Records
     public void record(Character key, long elapsedTime) {
         records.add(new Record(key, elapsedTime));
     }
+
 
     // EFFECTS: return the number of songs that have been stored
     public int getNumOfSongs() {

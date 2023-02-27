@@ -26,6 +26,7 @@ public class Controller {
         scanner = new Scanner(System.in);
     }
 
+
     // EFFECTS: play the sound that corresponds to the key
     public boolean playSound(Character key) throws LineUnavailableException,
             IOException, UnsupportedAudioFileException {
@@ -42,6 +43,7 @@ public class Controller {
 
         return noError;
     }
+
 
     //EFFECTS: plays a recorded song based on user's input
     public void mainPlayRecord() throws InterruptedException,
@@ -70,6 +72,7 @@ public class Controller {
         }
 
     }
+
 
     // MODIFIES: this (specifically modifies the players object)
     // EFFECTS: records a song based on what the user presses and when
@@ -105,6 +108,7 @@ public class Controller {
 
     }
 
+
     // EFFECT: gives the user an option to play random keys until 'q' is pressed
     public void mainFreestyle() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         char choice;
@@ -118,6 +122,7 @@ public class Controller {
             playSound(choice);
         }
     }
+
 
     // EFFECTS: calculates the percentage of the keys that user presses are equal to what the user should be
     //          pressing based on what beat was selected and how many times was it supposed to be played
@@ -150,6 +155,7 @@ public class Controller {
 
     }
 
+
     // EFFECTS: displays which keys map to which part of the drum-set
     public void showDrumMap() {
         System.out.println("s - Floor Tom");
@@ -161,6 +167,7 @@ public class Controller {
         System.out.println("k - Crash");
 
     }
+
 
     // EFFECTS: displays a starting guide to help user navigate the program
     public void intro() {
