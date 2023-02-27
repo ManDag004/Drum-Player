@@ -13,7 +13,7 @@ public class TestPlayer {
     }
 
     @Test
-    void testRecordMultiplle() {
+    void testRecordMultiple() {
         assertEquals(0, player.getRecords().size());
 
         player.record('d', 0);
@@ -48,7 +48,7 @@ public class TestPlayer {
     }
 
     @Test
-    void testGetFirstwoRecord() {
+    void testGetFirstTwoRecord() {
         player.record('d', 0);
         player.record('j', 250);
         player.record('f', 500);
@@ -96,6 +96,7 @@ public class TestPlayer {
 
         player.addToSongs();
         player.deleteRecords();
+        assertEquals(1, player.getNumOfSongs());
 
         player.record('f', 0);
         player.record('g', 125);
@@ -104,6 +105,7 @@ public class TestPlayer {
 
         player.addToSongs();
         player.deleteRecords();
+        assertEquals(2, player.getNumOfSongs());
 
         assertEquals(3, player.getSong(1).size());
         assertEquals(4, player.getSong(2).size());

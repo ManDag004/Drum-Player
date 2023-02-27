@@ -2,10 +2,7 @@ package model;
 
 import org.junit.jupiter.api.*;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +15,7 @@ public class TestDrums {
     }
 
     @Test
-    void testPlay() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    void testPlay(){
         assertEquals(new File("src/Bass.wav"), drums.getSound('d'));
         assertEquals(new File("src/Snare.wav"), drums.getSound('f'));
         assertEquals(new File("src/Hi-Hat.wav"), drums.getSound('j'));

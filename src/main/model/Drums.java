@@ -2,13 +2,17 @@ package model;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
-public class Drums {
-    // delete or rename this class!
-    private static HashMap<Character, File> drumParts = new HashMap<Character, File>();
 
+/*
+ * Represents a drum-set
+ */
+public class Drums {
+
+    private static HashMap<Character, File> drumParts = new HashMap<>();
+
+    // EFFECTS: constructs a new Drums object
     public Drums() {
         drumParts.put('d', new File("src/Bass.wav"));
         drumParts.put('f', new File("src/Snare.wav"));
