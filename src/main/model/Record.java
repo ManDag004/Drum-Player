@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 /*
  * Represents a single record with key and time after which it should be played
  */
-public class Record {
+public class Record implements Writable {
     private char key;
     private long time;
 
@@ -22,5 +25,13 @@ public class Record {
     // Effects: Returns the time in integer of the record
     public int getTime() {
         return (int) this.time;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("key", Character.toString(key));
+        json.put("time", time);
+        return json;
     }
 }

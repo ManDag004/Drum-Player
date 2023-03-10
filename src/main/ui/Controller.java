@@ -4,9 +4,15 @@ import model.Drums;
 import model.Player;
 import model.Record;
 import model.Teacher;
+import org.json.JSONObject;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.sound.sampled.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -18,12 +24,20 @@ public class Controller {
     private Player player;
     private Teacher teacher;
     private Scanner scanner;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private int songsToSkip = 0;
+    private static final String SONG_LIST = "./data/songs.json";
 
     public Controller() {
         drums = new Drums();
         player = new Player();
         teacher = new Teacher();
         scanner = new Scanner(System.in);
+        jsonWriter = new JsonWriter(SONG_LIST);
+        jsonReader = new JsonReader(SONG_LIST);
+
+
     }
 
 
@@ -178,7 +192,59 @@ public class Controller {
                 + "\t 4  to listen to your records\n"
                 + "\t'h' to see drum mappings\n"
                 + "\t'e' to exit\n"
+                + "\t's' to save your recordings\n"
+                + "\t'l' to load your recordings\n"
                 + "When typing alphabets, only the first character of input in considered, so type carefully!");
+    }
+
+    // EFFECTS: Saves the songs in json format in SONG_LIST
+    public void mainSave() {
+        System.out.println("Would you like to save your songs from the current session? (y/n)");
+        String choice = scanner.next();
+
+        while (!choice.equals("n")) {
+            if (choice.equals("y")) {
+                try {
+                    Player ogPlayer = jsonReader.read();
+                    for (int i = songsToSkip + 1; i <= player.getNumOfSongs(); i++) {
+                        ogPlayer.addNewSong(player.getSong(i));
+                    }
+                    jsonWriter.open();
+                    jsonWriter.write(ogPlayer);
+                    jsonWriter.close();
+                    System.out.println("Saved songs to " + SONG_LIST);
+                } catch (FileNotFoundException e) {
+                    System.out.println("Unable to write to file: " + SONG_LIST);
+                } catch (IOException e) {
+                    System.out.println("Unable to write to file: " + SONG_LIST);
+                }
+                break;
+            }
+            System.out.println("Please enter correctly. "
+                    + "Would you like to save your songs from the current session? (y/n)");
+        }
+    }
+
+    // MODIFIES: this (player)
+    // EFFECTS: creates a player object with the songs' field filled using the json data from SONG_LIST
+    public void mainLoad() {
+        System.out.println("Would you like to load your songs from previous sessions? (y/n)");
+        String choice = scanner.next();
+
+        while (!choice.equals("n")) {
+            if (choice.equals("y")) {
+                try {
+                    player = jsonReader.read();
+                    songsToSkip = player.getNumOfSongs();
+                    System.out.println("Loaded songs from " + SONG_LIST);
+                } catch (IOException e) {
+                    System.out.println("Unable to read from file: " + SONG_LIST);
+                }
+                break;
+            }
+            System.out.println("Please enter correctly. "
+                    + "Would you like to load your songs from previous sessions? (y/n)");
+        }
     }
 
 }

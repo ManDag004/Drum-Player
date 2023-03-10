@@ -15,7 +15,10 @@ public class Main {
             LineUnavailableException, IOException, InterruptedException {
         Controller controller = new Controller();
         Scanner scanner = new Scanner(System.in);
+
+        controller.mainLoad();
         controller.intro();
+
         char choice = scanner.next().charAt(0);
 
         while (choice != 'e') {
@@ -23,7 +26,6 @@ public class Main {
                 controller.mainRecord();
             } else if (choice == '2') {
                 controller.mainFreestyle();
-
             } else if (choice == '3') {
                 controller.mainLearn();
             } else if (choice == '4') {
@@ -31,9 +33,12 @@ public class Main {
             } else if (choice == 'h') {
                 controller.showDrumMap();
             }
+
             controller.intro();
             choice = scanner.next().charAt(0);
         }
+
+        controller.mainSave();
         System.out.println("Quitting!");
     }
 }

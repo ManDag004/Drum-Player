@@ -1,6 +1,10 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.*;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -125,6 +129,61 @@ public class TestPlayer {
         assertEquals(125, player.getSong(2).get(1).getTime());
         assertEquals(300, player.getSong(2).get(2).getTime());
         assertEquals(450, player.getSong(2).get(3).getTime());
+
+    }
+
+    @Test
+    void testRecordsToJson() {
+        player.record('d', 0);
+        player.record('j', 250);
+        player.record('f', 500);
+
+        player.addToSongs();
+        player.deleteRecords();
+        assertEquals(1, player.getNumOfSongs());
+
+        player.record('f', 0);
+        player.record('g', 125);
+        player.record('h', 300);
+        player.record('j', 450);
+
+        player.addToSongs();
+        player.deleteRecords();
+        assertEquals(2, player.getNumOfSongs());
+
+        JSONObject json = player.toJson();
+        JSONArray songs = player.toJson().getJSONArray("songs");
+
+        JSONObject song1 = songs.getJSONObject(0);
+        JSONObject song2 = songs.getJSONObject(1);
+
+        JSONArray records1 = song1.getJSONArray("records");
+        JSONArray records2 = song2.getJSONArray("records");
+
+        assertEquals(1, json.length());
+        assertEquals(2, songs.length());
+
+        assertEquals(1, song1.getInt("id"));
+        assertEquals(2, song2.getInt("id"));
+
+        assertEquals(3, records1.length());
+        assertEquals(4, records2.length());
+
+        assertEquals("d", records1.getJSONObject(0).getString("key"));
+        assertEquals(0, records1.getJSONObject(0).getInt("time"));
+        assertEquals("j", records1.getJSONObject(1).getString("key"));
+        assertEquals(250, records1.getJSONObject(1).getInt("time"));
+        assertEquals("f", records1.getJSONObject(2).getString("key"));
+        assertEquals(500, records1.getJSONObject(2).getInt("time"));
+
+        assertEquals("f", records2.getJSONObject(0).getString("key"));
+        assertEquals(0, records2.getJSONObject(0).getInt("time"));
+        assertEquals("g", records2.getJSONObject(1).getString("key"));
+        assertEquals(125, records2.getJSONObject(1).getInt("time"));
+        assertEquals("h", records2.getJSONObject(2).getString("key"));
+        assertEquals(300, records2.getJSONObject(2).getInt("time"));
+        assertEquals("j", records2.getJSONObject(3).getString("key"));
+        assertEquals(450, records2.getJSONObject(3).getInt("time"));
 
     }
 

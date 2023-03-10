@@ -1,12 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /*
  * Represents a Player to record, store and replay music
  */
-public class Player {
+public class Player implements Writable {
     private ArrayList<Record> records;
     private HashMap<Integer, ArrayList<Record>> songs;
 
@@ -26,6 +30,11 @@ public class Player {
     // EFFECTS: Adds the new recorded song to the hashmap at next key value (calculated by adding 1 to its size)
     public void addToSongs() {
         songs.put(songs.size() + 1, new ArrayList<>(records));
+    }
+
+    public void addNewSong(ArrayList<Record> song) {
+        this.records = song;
+        addToSongs();
     }
 
 
@@ -64,5 +73,35 @@ public class Player {
     // EFFECTS: return the number of songs that have been stored
     public int getNumOfSongs() {
         return songs.size();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("songs", songsToJson());
+        return json;
+    }
+
+    private JSONArray songsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (int i = 1; i <= songs.size(); i++) {
+            JSONObject json = new JSONObject();
+            json.put("id", i);
+            json.put("records", recordsToJson(songs.get(i)));
+            jsonArray.put(json);
+        }
+
+        return jsonArray;
+    }
+
+    private JSONArray recordsToJson(ArrayList<Record> records) {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Record r : records) {
+            jsonArray.put(r.toJson());
+        }
+
+        return jsonArray;
     }
 }

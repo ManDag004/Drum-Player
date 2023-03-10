@@ -1,0 +1,117 @@
+{"songs": [
+    {
+        "records": [
+            {
+                "time": 0,
+                "key": "s"
+            },
+            {
+                "time": 32,
+                "key": "d"
+            },
+            {
+                "time": 13,
+                "key": "s"
+            },
+            {
+                "time": 74,
+                "key": "d"
+            },
+            {
+                "time": 209,
+                "key": "s"
+            },
+            {
+                "time": 236,
+                "key": "d"
+            },
+            {
+                "time": 224,
+                "key": "s"
+            },
+            {
+                "time": 226,
+                "key": "d"
+            }
+        ],
+        "id": 1
+    },
+    {
+        "records": [
+            {
+                "time": 0,
+                "key": "f"
+            },
+            {
+                "time": 148,
+                "key": "g"
+            },
+            {
+                "time": 175,
+                "key": "f"
+            },
+            {
+                "time": 223,
+                "key": "g"
+            },
+            {
+                "time": 238,
+                "key": "f"
+            },
+            {
+                "time": 218,
+                "key": "g"
+            },
+            {
+                "time": 220,
+                "key": "f"
+            },
+            {
+                "time": 264,
+                "key": "g"
+            }
+        ],
+        "id": 2
+    },
+    {
+        "records": [
+            {
+                "time": 0,
+                "key": "k"
+            },
+            {
+                "time": 45,
+                "key": "k"
+            },
+            {
+                "time": 10,
+                "key": "k"
+            },
+            {
+                "time": 5,
+                "key": "k"
+            },
+            {
+                "time": 122,
+                "key": "k"
+            },
+            {
+                "time": 267,
+                "key": "k"
+            },
+            {
+                "time": 149,
+                "key": "k"
+            },
+            {
+                "time": 140,
+                "key": "k"
+            },
+            {
+                "time": 132,
+                "key": "k"
+            }
+        ],
+        "id": 3
+    }
+]}
