@@ -129,7 +129,54 @@ public class TestPlayer {
         assertEquals(125, player.getSong(2).get(1).getTime());
         assertEquals(300, player.getSong(2).get(2).getTime());
         assertEquals(450, player.getSong(2).get(3).getTime());
+    }
 
+    @Test
+    void testAddNewSong() {
+        ArrayList<Record> records1 = new ArrayList<>();
+
+        records1.add(new Record('d', 0));
+        records1.add(new Record('j', 250));
+        records1.add(new Record('f', 500));
+
+        player.addNewSong(records1);
+        player.deleteRecords();
+        assertEquals(1, player.getNumOfSongs());
+
+        player.record('f', 0);
+        player.record('g', 125);
+        player.record('h', 300);
+        player.record('j', 450);
+
+        ArrayList<Record> records2 = new ArrayList<>();
+
+        records2.add(new Record('f', 0));
+        records2.add(new Record('g', 125));
+        records2.add(new Record('h', 300));
+        records2.add(new Record('j', 450));
+
+        player.addNewSong(records2);
+        player.deleteRecords();
+        assertEquals(2, player.getNumOfSongs());
+
+        assertEquals(3, player.getSong(1).size());
+        assertEquals(4, player.getSong(2).size());
+
+        assertEquals('d', player.getSong(1).get(0).getKey());
+        assertEquals('j', player.getSong(1).get(1).getKey());
+        assertEquals('f', player.getSong(1).get(2).getKey());
+        assertEquals(0, player.getSong(1).get(0).getTime());
+        assertEquals(250, player.getSong(1).get(1).getTime());
+        assertEquals(500, player.getSong(1).get(2).getTime());
+
+        assertEquals('f', player.getSong(2).get(0).getKey());
+        assertEquals('g', player.getSong(2).get(1).getKey());
+        assertEquals('h', player.getSong(2).get(2).getKey());
+        assertEquals('j', player.getSong(2).get(3).getKey());
+        assertEquals(0, player.getSong(2).get(0).getTime());
+        assertEquals(125, player.getSong(2).get(1).getTime());
+        assertEquals(300, player.getSong(2).get(2).getTime());
+        assertEquals(450, player.getSong(2).get(3).getTime());
     }
 
     @Test
@@ -186,6 +233,7 @@ public class TestPlayer {
         assertEquals(450, records2.getJSONObject(3).getInt("time"));
 
     }
+
 
 
 }
