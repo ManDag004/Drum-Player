@@ -4,15 +4,12 @@ import model.Drums;
 import model.Player;
 import model.Record;
 import model.Teacher;
-import org.json.JSONObject;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.sound.sampled.*;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -192,8 +189,6 @@ public class Controller {
                 + "\t 4  to listen to your records\n"
                 + "\t'h' to see drum mappings\n"
                 + "\t'e' to exit\n"
-                + "\t's' to save your recordings\n"
-                + "\t'l' to load your recordings\n"
                 + "When typing alphabets, only the first character of input in considered, so type carefully!");
     }
 
@@ -220,8 +215,8 @@ public class Controller {
                 }
                 break;
             }
-            System.out.println("Please enter correctly. "
-                    + "Would you like to save your songs from the current session? (y/n)");
+            System.out.println("Please enter correctly. (y/n)");
+            choice = scanner.next();
         }
     }
 
@@ -242,8 +237,8 @@ public class Controller {
                 }
                 break;
             }
-            System.out.println("Please enter correctly. "
-                    + "Would you like to load your songs from previous sessions? (y/n)");
+            System.out.println("Please enter correctly. (y/n)");
+            choice = scanner.next();
         }
     }
 

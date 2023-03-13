@@ -18,5 +18,6 @@ instantly record what I was thinking of so that it could be later played.
 - As a user, I wish to know how much I scored in the learn mode
 - As a user, I wish to have an option to record what I play
 - As a user, I wish to have an option to replay what I previously recorded
-- As a user, i want to be able to save my recording somewhere in my desktop
+- As a user, I want to have an option to save my recordings when I'm one with my work
+- As a user, I want to have an option to load my recordings when I'm starting the application
 

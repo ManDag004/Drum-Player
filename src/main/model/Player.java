@@ -14,6 +14,7 @@ public class Player implements Writable {
     private ArrayList<Record> records;
     private HashMap<Integer, ArrayList<Record>> songs;
 
+    // Effects: Constructs a Player object with records and songs initialised to empty
     public Player() {
         this.records = new ArrayList<>();
         this.songs = new HashMap<>();
@@ -75,13 +76,18 @@ public class Player implements Writable {
         return songs.size();
     }
 
+    // REFERENCE : code below was referred from the following project :
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
     @Override
+    // Effects: converts the player object into JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("songs", songsToJson());
         return json;
     }
 
+    // Effects: converts the songs HashMap object into JSONArray
     private JSONArray songsToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -95,6 +101,7 @@ public class Player implements Writable {
         return jsonArray;
     }
 
+    // Effects: converts a ArrayList<Record> records into JSONArray
     private JSONArray recordsToJson(ArrayList<Record> records) {
         JSONArray jsonArray = new JSONArray();
 

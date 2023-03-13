@@ -10,6 +10,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// REFERENCE : code below was referred from the following project :
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
 public class JsonReaderTest {
     @Test
     void testReaderNonExistentFile() {
@@ -23,7 +26,7 @@ public class JsonReaderTest {
     }
 
     @Test
-    void testReaderGeneralWorkRoom() {
+    void testReaderGeneralPlayer() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralPlayer.json");
         try {
             Player player = reader.read();

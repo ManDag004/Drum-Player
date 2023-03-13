@@ -9,7 +9,13 @@ import java.util.stream.Stream;
 import model.Player;
 import org.json.*;
 
-// Represents a reader that reads workroom from JSON data stored in file
+// REFERENCE : code below was referred from the following project :
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
+/*
+ * Represents a reader that reads progress from JSON data stored in file
+ */
+
 public class JsonReader {
     private String source;
 
@@ -18,7 +24,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads player from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Player read() throws IOException {
         String jsonData = readFile(source);
@@ -37,7 +43,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses player from JSON object and returns it
     private Player parsePlayer(JSONObject jsonObject) {
         Player player = new Player();
         JSONArray jsonArray = jsonObject.getJSONArray("songs");
@@ -48,8 +54,8 @@ public class JsonReader {
         return player;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
+    // MODIFIES: player
+    // EFFECTS: parses records from JSON object and adds them to player
     private void addRecords(Player player, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("records");
         for (Object json : jsonArray) {
@@ -60,8 +66,8 @@ public class JsonReader {
         player.deleteRecords();
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // MODIFIES: player
+    // EFFECTS: parses a single record from JSON object and adds it to player
     private void addRecord(Player player, JSONObject jsonObject) {
         Character key = jsonObject.getString("key").charAt(0);
         long time = jsonObject.getLong("time");

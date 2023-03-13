@@ -6,7 +6,12 @@ import org.json.JSONObject;
 
 import java.io.*;
 
-// Represents a writer that writes JSON representation of workroom to file
+// REFERENCE : code below was referred from the following project :
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
+/*
+ *  Represents a writer that writes JSON representation of Player to file
+ */
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -25,7 +30,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of player to file
     public void write(Player player) {
         JSONObject json = player.toJson();
         saveToFile(json.toString(TAB));

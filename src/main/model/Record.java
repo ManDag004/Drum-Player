@@ -27,7 +27,12 @@ public class Record implements Writable {
         return (int) this.time;
     }
 
+
+    // REFERENCE : code below was referred from the following project :
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
     @Override
+    // Effects: converts the record object into a JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("key", Character.toString(key));

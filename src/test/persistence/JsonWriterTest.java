@@ -10,6 +10,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// REFERENCE : code below was referred from the following project :
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
 public class JsonWriterTest {
 
     @Test
@@ -26,7 +29,7 @@ public class JsonWriterTest {
 
 
     @Test
-    void testWriterGeneralWorkroom() {
+    void testWriterGeneralPlayer() {
         try {
             Player player = new Player();
             player.record('d', 0);
@@ -46,8 +49,6 @@ public class JsonWriterTest {
             assertEquals(1, player.getNumOfSongs());
             List<Record> records = player.getSong(1);
             assertEquals(3, records.size());
-//            checkThingy("saw", Category.METALWORK, thingies.get(0));
-//            checkThingy("needle", Category.STITCHING, thingies.get(1));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

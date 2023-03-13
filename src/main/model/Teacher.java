@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class Teacher {
     private HashMap<Integer, String> beats = new HashMap<>();
 
+    // Effects: Constructs a Teacher object with three beats
     public Teacher() {
         this.beats.put(1, "df");
         this.beats.put(2, "djfj");
