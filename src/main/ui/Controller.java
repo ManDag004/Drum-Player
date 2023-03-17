@@ -8,6 +8,9 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -16,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 /*
  * Represents a controller that handles all the events
  */
-public class Controller {
+public class Controller extends JFrame {
     private Drums drums;
     private Player player;
     private Teacher teacher;
@@ -25,6 +28,7 @@ public class Controller {
     private JsonReader jsonReader;
     private int songsToSkip = 0;
     private static final String SONG_LIST = "./data/songs.json";
+    private long lastKnownTime;
 
     public Controller() {
         drums = new Drums();
@@ -33,14 +37,12 @@ public class Controller {
         scanner = new Scanner(System.in);
         jsonWriter = new JsonWriter(SONG_LIST);
         jsonReader = new JsonReader(SONG_LIST);
-
-
+        lastKnownTime = 0;
     }
 
 
     // EFFECTS: play the sound that corresponds to the key
-    public boolean playSound(Character key) throws LineUnavailableException,
-            IOException, UnsupportedAudioFileException {
+    public boolean playSound(Character key) {
         boolean noError = true;
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(drums.getSound(key));
@@ -48,8 +50,10 @@ public class Controller {
             clip.open(audioStream);
 
             clip.start();
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | UnsupportedAudioFileException | IOException e) {
             noError = false;
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
         }
 
         return noError;
@@ -57,82 +61,44 @@ public class Controller {
 
 
     //EFFECTS: plays a recorded song based on user's input
-    public void mainPlayRecord() throws InterruptedException,
-            UnsupportedAudioFileException, LineUnavailableException, IOException {
-        int songNum = -1;
-
-        if (player.getNumOfSongs() != 0) {
-            while (songNum < 0 || songNum > player.getNumOfSongs()) {
-                System.out.println("You have " + player.getNumOfSongs() + " songs. Choose 1 to play your first "
-                        + "recording, 2 to play your second recording, and so on. Choose 0 if you wish to exit:");
-                songNum = scanner.nextInt();
-            }
-
-            if (songNum != 0) {
-                Record tempRecord;
-                TimeUnit.SECONDS.sleep(1);
-                for (int i = 0; i < player.getSong(songNum).size(); i++) {
-                    tempRecord = player.getRecord(i, songNum);
-                    playSound(tempRecord.getKey());
-                    TimeUnit.MILLISECONDS.sleep(tempRecord.getTime());
-                }
-            }
-        } else {
-            System.out.println("You currently don't have any recordings. First create some recordings, and then come"
-                    + " back here to listen to them.");
+    public void mainPlayRecord(int songNum) throws InterruptedException {
+        Record tempRecord;
+        TimeUnit.SECONDS.sleep(1);
+        for (int i = 0; i < player.getSong(songNum).size(); i++) {
+            tempRecord = player.getRecord(i, songNum);
+            playSound(tempRecord.getKey());
+            TimeUnit.MILLISECONDS.sleep(tempRecord.getTime());
         }
-
     }
 
 
     // MODIFIES: this (specifically modifies the players object)
     // EFFECTS: records a song based on what the user presses and when
-    public void mainRecord() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        System.out.println("Started recording! Press 'q' anytime to stop recording!");
+    public void mainRecord(char key) {
+        boolean isFirst = player.getRecords().size() == 0;
+        boolean noErrors = false;
 
-        Character key = scanner.next().charAt(0);
-        boolean noErrors = playSound(key);
-        player.record(key, 0);
-
-        while (noErrors) {
-            long startTime = System.currentTimeMillis();
-
-            key = scanner.next().charAt(0);
-            if (key == 'q') {
-                break;
-            }
-            noErrors = playSound(key);
-            long elapsedTime = System.currentTimeMillis() - startTime;
-
-
-            player.record(key, elapsedTime);
-        }
-
+        noErrors = playSound(key);
         if (noErrors) {
-            player.addToSongs();
-            System.out.println("Ended recording!");
-        } else {
-            System.out.println("Invalid key pressed and your recording has been discarded. Next time, play properly!");
+            if (isFirst) {
+                player.record(key, 0);
+            } else {
+                long elapsedTime = System.currentTimeMillis() - lastKnownTime;
+                player.record(key, elapsedTime);
+            }
+            lastKnownTime = System.currentTimeMillis();
         }
 
-        player.deleteRecords();
+    }
 
+    public void mainAddRecords() {
+        System.out.println(player.getRecords());
+        player.addToSongs();
+        player.deleteRecords();
     }
 
 
     // EFFECT: gives the user an option to play random keys until 'q' is pressed
-    public void mainFreestyle() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        char choice;
-        System.out.println("Just Play!");
-        System.out.println("Press 'q' anytime to quit!");
-        while (true) {
-            choice = scanner.next().charAt(0);
-            if (choice == 'q') {
-                break;
-            }
-            playSound(choice);
-        }
-    }
 
 
     // EFFECTS: calculates the percentage of the keys that user presses are equal to what the user should be
@@ -194,52 +160,36 @@ public class Controller {
 
     // EFFECTS: Saves the songs in json format in SONG_LIST
     public void mainSave() {
-        System.out.println("Would you like to save your songs from the current session? (y/n)");
-        String choice = scanner.next();
-
-        while (!choice.equals("n")) {
-            if (choice.equals("y")) {
-                try {
-                    Player ogPlayer = jsonReader.read();
-                    for (int i = songsToSkip + 1; i <= player.getNumOfSongs(); i++) {
-                        ogPlayer.addNewSong(player.getSong(i));
-                    }
-                    jsonWriter.open();
-                    jsonWriter.write(ogPlayer);
-                    jsonWriter.close();
-                    System.out.println("Saved songs to " + SONG_LIST);
-                } catch (FileNotFoundException e) {
-                    System.out.println("Unable to write to file: " + SONG_LIST);
-                } catch (IOException e) {
-                    System.out.println("Unable to write to file: " + SONG_LIST);
-                }
-                break;
+        try {
+            Player ogPlayer = jsonReader.read();
+            for (int i = songsToSkip + 1; i <= player.getNumOfSongs(); i++) {
+                ogPlayer.addNewSong(player.getSong(i));
             }
-            System.out.println("Please enter correctly. (y/n)");
-            choice = scanner.next();
+            jsonWriter.open();
+            jsonWriter.write(ogPlayer);
+            jsonWriter.close();
+            System.out.println("Saved songs to " + SONG_LIST);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + SONG_LIST);
+        } catch (IOException e) {
+            System.out.println("Unable to write to file: " + SONG_LIST);
         }
     }
 
     // MODIFIES: this (player)
     // EFFECTS: creates a player object with the songs' field filled using the json data from SONG_LIST
     public void mainLoad() {
-        System.out.println("Would you like to load your songs from previous sessions? (y/n)");
-        String choice = scanner.next();
-
-        while (!choice.equals("n")) {
-            if (choice.equals("y")) {
-                try {
-                    player = jsonReader.read();
-                    songsToSkip = player.getNumOfSongs();
-                    System.out.println("Loaded songs from " + SONG_LIST);
-                } catch (IOException e) {
-                    System.out.println("Unable to read from file: " + SONG_LIST);
-                }
-                break;
-            }
-            System.out.println("Please enter correctly. (y/n)");
-            choice = scanner.next();
+        try {
+            player = jsonReader.read();
+            songsToSkip = player.getNumOfSongs();
+            System.out.println("Loaded songs from " + SONG_LIST);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + SONG_LIST);
         }
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
 }
