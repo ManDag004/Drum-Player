@@ -165,6 +165,7 @@ public class Controller extends JFrame {
             for (int i = songsToSkip + 1; i <= player.getNumOfSongs(); i++) {
                 ogPlayer.addNewSong(player.getSong(i));
             }
+            // test comment
             jsonWriter.open();
             jsonWriter.write(ogPlayer);
             jsonWriter.close();
