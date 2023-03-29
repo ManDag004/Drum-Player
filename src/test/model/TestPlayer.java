@@ -132,7 +132,7 @@ public class TestPlayer {
     }
 
     @Test
-    void testAddNewSong() {
+    void testAddAndRemoveNewSong() {
         ArrayList<Record> records1 = new ArrayList<>();
 
         records1.add(new Record('d', 0));
@@ -177,6 +177,10 @@ public class TestPlayer {
         assertEquals(125, player.getSong(2).get(1).getTime());
         assertEquals(300, player.getSong(2).get(2).getTime());
         assertEquals(450, player.getSong(2).get(3).getTime());
+
+        player.deleteRecords(2);
+        assertEquals(1, player.getNumOfSongs());
+        assertEquals(3, player.getSong(1).size());
     }
 
     @Test

@@ -5,7 +5,9 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 
 /*
  * Represents a Player to record, store and replay music
@@ -43,6 +45,15 @@ public class Player implements Writable {
     // EFFECTS: Modifies he records ArrayList as a new empty ArrayList
     public void deleteRecords() {
         records = new ArrayList<>();
+    }
+
+    public void deleteRecords(int i) {
+        songs.remove(i);
+        ArrayList<ArrayList<Record>> tempSongs = new ArrayList<>(songs.values());
+        songs.clear();
+        for (i = 0; i < tempSongs.size(); i++) {
+            songs.put(i + 1, tempSongs.get(i));
+        }
     }
 
 

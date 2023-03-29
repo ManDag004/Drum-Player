@@ -1,8 +1,5 @@
 package ui;
 
-import model.Player;
-import model.Record;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,28 +17,36 @@ public class SavedSongs extends JFrame implements ActionListener {
     }
 
     private void initGraphics() {
-        setVisible(true);
         setLayout(null);
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        centreOnScreen();
+        setLocationRelativeTo(null);
+
         addButtons();
+        setVisible(true);
+
+
     }
 
-    private void centreOnScreen() {
-        Dimension scrn = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation((scrn.width - getWidth()) / 2, (scrn.height - getHeight()) / 2);
-    }
-
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void addButtons() {
+
         for (int i = 1; i <= controller.getPlayer().getNumOfSongs(); i++) {
-            JButton tempButton = new JButton();
-            tempButton.setBounds(200, i * 30, 60, 20);
-            tempButton.addActionListener(this);
-            tempButton.setFocusable(false);
-            tempButton.setName(String.valueOf(i));
-            tempButton.setText("Song" + i);
-            add(tempButton);
+            JButton tempSongButton = new JButton();
+            tempSongButton.setBounds(100, i * 25, 60, 20);
+            tempSongButton.addActionListener(this);
+            tempSongButton.setFocusable(false);
+            tempSongButton.setName(String.valueOf(i));
+            tempSongButton.setText("Song " + i);
+            add(tempSongButton);
+
+            JButton tempDeleteButton = new JButton();
+            tempDeleteButton.setBounds(200, i * 25, 60, 20);
+            tempDeleteButton.addActionListener(this);
+            tempDeleteButton.setFocusable(false);
+            tempDeleteButton.setName(String.valueOf(i));
+            tempDeleteButton.setText("Delete " + i);
+            add(tempDeleteButton);
         }
     }
 
@@ -49,7 +54,12 @@ public class SavedSongs extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton) e.getSource();
         try {
-            controller.mainPlayRecord(Integer.parseInt(button.getName()));
+            if (button.getText().contains("Song")) {
+                controller.mainPlayRecord(Integer.parseInt(button.getName()));
+            } else {
+                controller.removeSong(Integer.parseInt(button.getName()));
+                button.setEnabled(false);
+            }
         } catch (InterruptedException ex) {
             throw new RuntimeException(ex);
         }
