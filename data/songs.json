@@ -3,122 +3,50 @@
         "records": [
             {
                 "time": 0,
-                "key": "f"
-            },
-            {
-                "time": 10,
                 "key": "h"
             },
             {
-                "time": 200,
-                "key": "d"
+                "time": 318,
+                "key": "f"
             },
             {
-                "time": 132,
+                "time": 148,
+                "key": "h"
+            },
+            {
+                "time": 155,
+                "key": "g"
+            },
+            {
+                "time": 111,
                 "key": "j"
             },
             {
-                "time": 230,
-                "key": "f"
+                "time": 130,
+                "key": "s"
             },
             {
-                "time": 204,
+                "time": 147,
                 "key": "h"
             },
             {
-                "time": 178,
+                "time": 24,
+                "key": "k"
+            },
+            {
+                "time": 220,
                 "key": "d"
             },
             {
-                "time": 174,
+                "time": 29,
+                "key": "k"
+            },
+            {
+                "time": 117,
                 "key": "h"
             },
             {
-                "time": 182,
-                "key": "f"
-            },
-            {
-                "time": 246,
-                "key": "h"
-            },
-            {
-                "time": 42,
-                "key": "f"
-            },
-            {
-                "time": 85,
-                "key": "h"
-            },
-            {
-                "time": 47,
-                "key": "f"
-            },
-            {
-                "time": 82,
-                "key": "h"
-            },
-            {
-                "time": 36,
-                "key": "f"
-            },
-            {
-                "time": 129,
-                "key": "h"
-            },
-            {
-                "time": 469,
-                "key": "h"
-            },
-            {
-                "time": 122,
-                "key": "h"
-            },
-            {
-                "time": 152,
-                "key": "h"
-            },
-            {
-                "time": 283,
-                "key": "f"
-            },
-            {
-                "time": 132,
-                "key": "f"
-            },
-            {
-                "time": 144,
-                "key": "f"
-            },
-            {
-                "time": 284,
-                "key": "g"
-            },
-            {
-                "time": 176,
-                "key": "d"
-            },
-            {
-                "time": 219,
-                "key": "g"
-            },
-            {
-                "time": 108,
-                "key": "f"
-            },
-            {
-                "time": 201,
-                "key": "h"
-            },
-            {
-                "time": 137,
-                "key": "d"
-            },
-            {
-                "time": 175,
-                "key": "g"
-            },
-            {
-                "time": 146,
+                "time": 179,
                 "key": "f"
             }
         ],
@@ -131,96 +59,30 @@
                 "key": "f"
             },
             {
-                "time": 39,
+                "time": 196,
                 "key": "h"
             },
             {
-                "time": 6,
-                "key": "d"
-            },
-            {
-                "time": 13,
+                "time": 115,
                 "key": "s"
             },
             {
-                "time": 344,
+                "time": 226,
+                "key": "d"
+            },
+            {
+                "time": 169,
+                "key": "j"
+            },
+            {
+                "time": 194,
+                "key": "h"
+            },
+            {
+                "time": 162,
                 "key": "f"
             }
         ],
         "id": 2
-    },
-    {
-        "records": [
-            {
-                "time": 0,
-                "key": "f"
-            },
-            {
-                "time": 63,
-                "key": "h"
-            },
-            {
-                "time": 193,
-                "key": "d"
-            },
-            {
-                "time": 280,
-                "key": "s"
-            },
-            {
-                "time": 145,
-                "key": "h"
-            },
-            {
-                "time": 126,
-                "key": "f"
-            },
-            {
-                "time": 335,
-                "key": "d"
-            }
-        ],
-        "id": 3
-    },
-    {
-        "records": [
-            {
-                "time": 0,
-                "key": "g"
-            },
-            {
-                "time": 43,
-                "key": "h"
-            },
-            {
-                "time": 4,
-                "key": "g"
-            },
-            {
-                "time": 82,
-                "key": "j"
-            },
-            {
-                "time": 166,
-                "key": "f"
-            },
-            {
-                "time": 153,
-                "key": "h"
-            },
-            {
-                "time": 107,
-                "key": "g"
-            },
-            {
-                "time": 147,
-                "key": "j"
-            },
-            {
-                "time": 115,
-                "key": "f"
-            }
-        ],
-        "id": 4
     }
 ]}

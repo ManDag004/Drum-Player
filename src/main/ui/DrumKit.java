@@ -23,16 +23,28 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
     HashMap<Character, JLabel> drumLabels;
     HashMap<Character, Timer> timers;
 
+    // EFFECTS: Initializes the DrumKet JFrame
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public DrumKit() {
-        // MY CODE
         super("Drum Kit");
         addKeyListener(this);
         controller = new Controller();
         mode = 1;
 
+        initGaphics();
 
+        int result = JOptionPane.showConfirmDialog(this,"Do you wish to load?", "Load",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
 
+        if (result == JOptionPane.YES_OPTION) {
+            controller.mainLoad();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds all the visual component in the window
+    private void initGaphics() {
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,41 +64,11 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
         setLocationRelativeTo(null);
         pack();
         setVisible(true);
-
-        int result = JOptionPane.showConfirmDialog(this,"Do you wish to load?", "Load",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-
-        if (result == JOptionPane.YES_OPTION) {
-            controller.mainLoad();
-        }
-
-
-//        new Prompts(controller, 0);
-
-
-
-        // DIFF CODE
-//        try {
-//            JLabel label = new JLabel(new ImageIcon(ImageIO.read(new File("src/drum.png"))));
-//
-//            JFrame frame = new JFrame("Testing");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.setContentPane(label);
-//            frame.setLayout(new BorderLayout());
-//            JLabel text = new JLabel("Hello from the foreground");
-//            text.setForeground(Color.WHITE);
-//            text.setHorizontalAlignment(JLabel.CENTER);
-//            frame.add(text);
-//            frame.pack();
-//            frame.setLocationRelativeTo(null);
-//            frame.setVisible(true);
-//        } catch (IOException | HeadlessException exp) {
-//            exp.printStackTrace();
-//        }
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: creates and adds the buttons
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void addButtons() {
         recordButton = new JButton(new ImageIcon("src/start.png"));
@@ -106,7 +88,7 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
         add(stopRecordButton);
 
         showSongs = new JButton();
-        showSongs.setBounds(200, 300, 60, 20);
+        showSongs.setBounds(200, 300, 100, 20);
         showSongs.addActionListener(this);
         showSongs.setFocusable(false);
         showSongs.setText("Songs");
@@ -115,7 +97,7 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
         add(showSongs);
 
         saveAndExit = new JButton();
-        saveAndExit.setBounds(200, 350, 60, 20);
+        saveAndExit.setBounds(200, 350, 100, 20);
         saveAndExit.addActionListener(this);
         saveAndExit.setFocusable(false);
         saveAndExit.setText("Save and Exit");
@@ -124,6 +106,8 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
         add(saveAndExit);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates and adds the labels
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void addLabels() {
         drumLabels = new HashMap<>();
@@ -163,6 +147,8 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates timers that correspond with each label
     public void addTimers() {
         timers = new HashMap<>();
         for (char key : drumLabels.keySet()) {
@@ -173,6 +159,8 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays the label of the corresponding key on the corresponding drum part
     public void animateLabel(char key) {
         JLabel tempLabel = drumLabels.get(key);
         Timer tempTimer = timers.get(key);
@@ -181,6 +169,8 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
         tempTimer.start();
     }
 
+    // MODIFIES: this (player)
+    // EFFECTS: handles the click of all the buttons present on the window
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == recordButton) {
@@ -202,12 +192,11 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
         }
     }
 
-
+    // EFFECTS: Not using it, but has to be present
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e) {}
 
-    }
-
+    // EFFECTS: deletes all songs
     @Override
     public void keyPressed(KeyEvent e) {
         char key = e.getKeyChar();
@@ -224,44 +213,9 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
 
     }
 
+    // EFFECTS: Not using it, but has to be present
     @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
-
-
-
-    // EFFECTS: runs the program and handles all user interactions
-//    public static void main(String[] args) throws UnsupportedAudioFileException,
-//            LineUnavailableException, IOException, InterruptedException {
-//        Controller controller = new Controller();
-//        Scanner scanner = new Scanner(System.in);
-//
-//        controller.mainLoad();
-//        controller.intro();
-//
-//        char choice = scanner.next().charAt(0);
-//
-//        while (choice != 'e') {
-//            if (choice == '1') {
-//                controller.mainRecord();
-//            } else if (choice == '2') {
-//                controller.mainFreestyle();
-//            } else if (choice == '3') {
-//                controller.mainLearn();
-//            } else if (choice == '4') {
-//                controller.mainPlayRecord();
-//            } else if (choice == 'h') {
-//                controller.showDrumMap();
-//            }
-//
-//            controller.intro();
-//            choice = scanner.next().charAt(0);
-//        }
-//
-//        controller.mainSave();
-//        System.out.println("Quitting!");
-//    }
+    public void keyReleased(KeyEvent e) {}
 
     public static void main(String[] args) {
         new DrumKit();

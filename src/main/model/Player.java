@@ -56,6 +56,10 @@ public class Player implements Writable {
         }
     }
 
+    public void deleteAll() {
+        songs.clear();
+    }
+
 
     // EFFECTS: returns the records ArrayList
     public ArrayList<Record> getRecords() {

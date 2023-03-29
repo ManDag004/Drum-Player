@@ -99,10 +99,6 @@ public class Controller extends JFrame {
         player.deleteRecords();
     }
 
-
-    // EFFECT: gives the user an option to play random keys until 'q' is pressed
-
-
     // EFFECTS: calculates the percentage of the keys that user presses are equal to what the user should be
     //          pressing based on what beat was selected and how many times was it supposed to be played
     public void mainLearn() throws Exception {
@@ -160,6 +156,7 @@ public class Controller extends JFrame {
                 + "When typing alphabets, only the first character of input in considered, so type carefully!");
     }
 
+    // MODIFIES: songs.json
     // EFFECTS: Saves the songs in json format in SONG_LIST
     public void mainSave() {
         try {
@@ -198,12 +195,20 @@ public class Controller extends JFrame {
         }
     }
 
+    // EFFECTS: returns the player field
     public Player getPlayer() {
         return player;
     }
 
+    // MODIFIES: this (player)
+    // EFFECTS: deletes the song with key i
     public void removeSong(int i) {
         player.deleteRecords(i);
     }
 
+    // MODIFIES: this (player)
+    // EFFECTS: deletes all songs
+    public void removeAll() {
+        player.deleteAll();
+    }
 }
