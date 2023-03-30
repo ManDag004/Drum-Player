@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/*
+ * Represents a frame with saved songs
+ */
 public class SavedSongs extends JFrame implements ActionListener {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;

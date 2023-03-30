@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /*
- * Represents the main program that takes user's input and calls the appropriate method from controller
+ * Represents a frame that takes user's actions and calls the appropriate method from controller
  */
 public class DrumKit extends JFrame implements ActionListener, KeyListener {
     private static final int WIDTH = 800;
@@ -75,16 +75,13 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
         recordButton.setBounds(350, 50, 20, 20);
         recordButton.addActionListener(this);
         recordButton.setFocusable(false);
-        recordButton.setBackground(Color.RED);
-        recordButton.setOpaque(true);
+        recordButton.setOpaque(false);
         add(recordButton);
 
-        stopRecordButton = new JButton(new ImageIcon("src/start.png"));
+        stopRecordButton = new JButton(new ImageIcon("src/stop.png"));
         stopRecordButton.setBounds(430, 50, 20, 20);
         stopRecordButton.addActionListener(this);
         stopRecordButton.setFocusable(false);
-        recordButton.setBackground(Color.GRAY);
-        recordButton.setOpaque(true);
         add(stopRecordButton);
 
         showSongs = new JButton();
