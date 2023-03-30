@@ -181,6 +181,10 @@ public class TestPlayer {
         player.deleteRecords(2);
         assertEquals(1, player.getNumOfSongs());
         assertEquals(3, player.getSong(1).size());
+
+        player.deleteAll();
+        assertEquals(0, player.getNumOfSongs());
+
     }
 
     @Test
