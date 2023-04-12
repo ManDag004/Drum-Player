@@ -1,5 +1,8 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +27,6 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
     HashMap<Character, Timer> timers;
 
     // EFFECTS: Initializes the DrumKet JFrame
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public DrumKit() {
         super("Drum Kit");
         addKeyListener(this);
@@ -40,6 +42,13 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
         if (result == JOptionPane.YES_OPTION) {
             controller.mainLoad();
         }
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                printLog(EventLog.getInstance());
+                System.exit(0);
+            }
+        });
     }
 
     // MODIFIES: this
@@ -47,7 +56,6 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
     private void initGaphics() {
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         try {
@@ -213,6 +221,13 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
     // EFFECTS: Not using it, but has to be present
     @Override
     public void keyReleased(KeyEvent e) {}
+
+    public void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println(next.toString() + "\n\n");
+        }
+
+    }
 
     public static void main(String[] args) {
         new DrumKit();
