@@ -41,13 +41,13 @@ public class TestEvent {
         e1 = new Event("Added a song");
         e2 = new Event("Added a song");
         e3 = new Event("Added a different song");
-        Event e4;
+        Event e4 = null;
 
         assertEquals(e1, e2);     // Same time, Same description
         assertNotEquals(e1, e3);  // Same time, Different description
 
-        assertFalse(e1 == null);   // Comparing with null
-
+        assertNotEquals(e1, e4);   // Comparing with null
+        Boolean b = e1 == e2;
         e4 = new Event("Added a song");
         assertNotEquals(e1, e4);  // Different time, Same description
         assertNotEquals(e4, e3);  // Different time, Different description
