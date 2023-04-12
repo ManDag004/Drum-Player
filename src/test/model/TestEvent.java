@@ -7,9 +7,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TestEvent {
-    private Event e;
+    private Event e1;
+    private Event e2;
+    private Event e3;
+    private int i;
     private Date d;
 
     //NOTE: these tests might fail if time at which line (2) below is executed
@@ -18,18 +22,41 @@ public class TestEvent {
 
     @BeforeEach
     public void runBefore() {
-        e = new Event("Added a song");   // (1)
+        e1 = new Event("Added a song");   // (1)
         d = Calendar.getInstance().getTime();   // (2)
     }
 
     @Test
     public void testEvent() {
-        assertEquals("Added a song", e.getDescription());
-        assertEquals(d.toString(), e.getDate().toString());
+        assertEquals("Added a song", e1.getDescription());
+        assertEquals(d.toString(), e1.getDate().toString());
     }
 
     @Test
     public void testToString() {
-        assertEquals(d.toString() + "\n" + "Added a song", e.toString());
+        assertEquals(d.toString() + "\n" + "Added a song", e1.toString());
+    }
+
+    @Test
+    public void testEqualsAndHash() {
+        e1 = new Event("Added a song");
+        e2 = new Event("Added a song");
+        e3 = new Event("Added a different song");
+
+        assertEquals(e1, e2);     // Same time, Same description
+        assertNotEquals(e1, e3);  // Same time, Different description
+
+        Event e4 = new Event("Added a song");
+
+        assertNotEquals(e1, e4);  // Different time, Same description
+        assertNotEquals(e4, e3);  // Different time, Different description
+
+        assertNotEquals(e1, i);   // Comparing with null
+
+        i = 1;
+        assertNotEquals(e1, i);   // Comparing with a different class
+
+        assertEquals(e1.hashCode(), e2.hashCode());
+        assertNotEquals(e1.hashCode(), e3.hashCode());
     }
 }
