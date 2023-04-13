@@ -47,7 +47,7 @@ public class TestEvent {
         assertNotEquals(e1, e3);  // Same time, Different description
 
         assertNotEquals(e1, e4);   // Comparing with null
-        Boolean b = e1 == e2;
+
         e4 = new Event("Added a song");
         assertNotEquals(e1, e4);  // Different time, Same description
         assertNotEquals(e4, e3);  // Different time, Different description

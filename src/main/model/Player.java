@@ -30,7 +30,8 @@ public class Player implements Writable {
     // MODIFIES: this
     // EFFECTS: Adds the new recorded song to the hashmap at next key value (calculated by adding 1 to its size)
     public void addToSongs() {
-        EventLog.getInstance().logEvent(new Event("Added a new song at index: " + songs.size() + 1));
+        int numOfSongs = songs.size() + 1;
+        EventLog.getInstance().logEvent(new Event("Added a new song at index: " + numOfSongs));
         songs.put(songs.size() + 1, new ArrayList<>(records));
     }
 
@@ -49,7 +50,8 @@ public class Player implements Writable {
     // MODIFIES: this
     // EFFECTS: deletes the song at key value i
     public void deleteRecords(int i) {
-        EventLog.getInstance().logEvent(new Event("Removed the song at index: " + songs.size() + 1));
+
+        EventLog.getInstance().logEvent(new Event("Removed the song at index: " + i));
         songs.remove(i);
         ArrayList<ArrayList<Record>> tempSongs = new ArrayList<>(songs.values());
         songs.clear();
@@ -87,7 +89,7 @@ public class Player implements Writable {
     // MODIFIES: this
     // EFFECTS: Stores the keys pressed and the time between each key as Records
     public void record(Character key, long elapsedTime) {
-        EventLog.getInstance().logEvent(new Event("Recorded " + key + " after" + elapsedTime + " ms"));
+        EventLog.getInstance().logEvent(new Event("Recorded " + key + " after " + elapsedTime + " ms"));
         records.add(new Record(key, elapsedTime));
     }
 

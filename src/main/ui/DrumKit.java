@@ -192,6 +192,7 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
 
             if (result == JOptionPane.YES_OPTION) {
                 controller.mainSave();
+                printLog(EventLog.getInstance());
                 System.exit(0);
             }
         }
@@ -224,7 +225,7 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
 
     public void printLog(EventLog el) {
         for (Event next : el) {
-            System.out.println(next.toString() + "\n\n");
+            System.out.println(next.toString() + "\n");
         }
 
     }
