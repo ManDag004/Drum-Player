@@ -15,9 +15,9 @@ public class SavedSongs extends JFrame implements ActionListener {
     Controller controller;
 
     // EFFECTS: initializes the SavedSongs class with the controller
-    public SavedSongs(Controller controller) {
+    public SavedSongs() {
         super("Saved Songs");
-        this.controller = controller;
+        this.controller = Controller.getInstance();
         initGraphics();
     }
 

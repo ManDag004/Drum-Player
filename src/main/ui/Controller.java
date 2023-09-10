@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * Represents a controller that handles all the events
  */
 public class Controller extends JFrame {
+    private static Controller controller;
     private Drums drums;
     private Player player;
     private Teacher teacher;
@@ -30,7 +31,8 @@ public class Controller extends JFrame {
     private static final String SONG_LIST = "./data/songs.json";
     private long lastKnownTime;
 
-    public Controller() {
+    // MODIFIES: initialises the Controller class
+    private Controller() {
         drums = new Drums();
         player = new Player();
         teacher = new Teacher();
@@ -38,6 +40,16 @@ public class Controller extends JFrame {
         jsonWriter = new JsonWriter(SONG_LIST);
         jsonReader = new JsonReader(SONG_LIST);
         lastKnownTime = 0;
+    }
+
+    // Singleton design pattern used
+    // Returns an instance of Controller if it exists, otherwise creates a new one
+    public static Controller getInstance() {
+        if (controller == null) {
+            controller = new Controller();
+        }
+
+        return controller;
     }
 
 

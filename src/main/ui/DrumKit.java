@@ -30,7 +30,7 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
     public DrumKit() {
         super("Drum Kit");
         addKeyListener(this);
-        controller = new Controller();
+        controller = Controller.getInstance();
         mode = 1;
 
         initGaphics();
@@ -79,17 +79,24 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
     // EFFECTS: creates and adds the buttons
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void addButtons() {
-        recordButton = new JButton(new ImageIcon("src/start.png"));
-        recordButton.setBounds(350, 50, 20, 20);
+        ImageIcon startIcon = new ImageIcon("src/start.png");
+        Image startImage = startIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        ImageIcon stopIcon = new ImageIcon("src/stop.png");
+        Image stopImage = stopIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        recordButton = new JButton(new ImageIcon(startImage));
+        recordButton.setBounds(330, 50, 38, 38);
         recordButton.addActionListener(this);
         recordButton.setFocusable(false);
         recordButton.setOpaque(false);
         add(recordButton);
 
-        stopRecordButton = new JButton(new ImageIcon("src/stop.png"));
-        stopRecordButton.setBounds(430, 50, 20, 20);
+        stopRecordButton = new JButton(new ImageIcon(stopImage));
+        stopRecordButton.setBounds(430, 50, 38, 38);
         stopRecordButton.addActionListener(this);
         stopRecordButton.setFocusable(false);
+        stopRecordButton.setEnabled(false);
         add(stopRecordButton);
 
         showSongs = new JButton();
@@ -117,6 +124,7 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
     private void addLabels() {
         drumLabels = new HashMap<>();
         JLabel crashLabel = new JLabel("CRASH");
+        crashLabel.setIcon(new ImageIcon("src/stop.png"));
         crashLabel.setBounds(100, 100, 60, 20);
 
         JLabel hiHatLabel = new JLabel("HI-HAT");
@@ -180,11 +188,15 @@ public class DrumKit extends JFrame implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == recordButton) {
             mode = 2;
+            recordButton.setEnabled(false);
+            stopRecordButton.setEnabled(true);
         } else if (e.getSource() == stopRecordButton) {
             mode = 1;
+            stopRecordButton.setEnabled(false);
+            recordButton.setEnabled(true);
             controller.mainAddRecords();
         } else if (e.getSource() == showSongs) {
-            new SavedSongs(controller);
+            new SavedSongs();
         } else if (e.getSource() == saveAndExit) {
             int result = JOptionPane.showConfirmDialog(this,"Do you wish to save?", "Save",
                     JOptionPane.YES_NO_OPTION,
